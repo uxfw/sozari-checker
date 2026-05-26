@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <conio.h>
 
 void set_red_color() {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -71,71 +73,57 @@ int is_tpm_enabled() {
     return 0;
 }
 
-void display_menu() {
-    std::cout << "1 - check tpm\n";
-    std::cout << "2 - check sb\n";
-    std::cout << "3 - check hvci\n";
-    std::cout << "4 - exit\n\n";
-    std::cout << "choix : ";
-}
-
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    std::string choice;
-    while (true) {
-        system("cls");
-        print_ascii_art();
-        display_menu();
-        std::getline(std::cin, choice);
+    system("cls");
+    print_ascii_art();
 
-        if (choice == "1") {
-            int tpm_status = is_tpm_enabled();
-            if (tpm_status) {
-                std::cout << "tpm : ";
-                set_green_color();
-                std::cout << "enabled\n";
-                set_default_color();
-            } else {
-                std::cout << "tpm : ";
-                set_red_color();
-                std::cout << "disabled\n";
-                set_default_color();
-            }
-            system("pause");
-        } else if (choice == "2") {
-            int secure_boot_status = is_secure_boot_enabled();
-            if (secure_boot_status) {
-                std::cout << "secure_boot : ";
-                set_green_color();
-                std::cout << "enabled\n";
-                set_default_color();
-            } else {
-                std::cout << "secure_boot : ";
-                set_red_color();
-                std::cout << "disabled\n";
-                set_default_color();
-            }
-            system("pause");
-        } else if (choice == "3") {
-            int hvci_status = is_hvci_enabled();
-            if (hvci_status) {
-                std::cout << "hvci : ";
-                set_green_color();
-                std::cout << "enabled\n";
-                set_default_color();
-            } else {
-                std::cout << "hvci : ";
-                set_red_color();
-                std::cout << "disabled\n";
-                set_default_color();
-            }
-            system("pause");
-        } else if (choice == "4") {
-            break;
-        } else {
-            std::cout << "invalide\n";
-            system("pause");
-        }
+    std::ofstream out_file("sozari results.txt");
+
+    int tpm_status = is_tpm_enabled();
+    std::cout << "tpm : ";
+    out_file << "tpm : ";
+    if (tpm_status) {
+        set_green_color();
+        std::cout << "enabled\n";
+        out_file << "enabled\n";
+    } else {
+        set_red_color();
+        std::cout << "disabled\n";
+        out_file << "disabled\n";
     }
+    set_default_color();
+
+    int secure_boot_status = is_secure_boot_enabled();
+    std::cout << "secure_boot : ";
+    out_file << "secure_boot : ";
+    if (secure_boot_status) {
+        set_green_color();
+        std::cout << "enabled\n";
+        out_file << "enabled\n";
+    } else {
+        set_red_color();
+        std::cout << "disabled\n";
+        out_file << "disabled\n";
+    }
+    set_default_color();
+
+    int hvci_status = is_hvci_enabled();
+    std::cout << "hvci : ";
+    out_file << "hvci : ";
+    if (hvci_status) {
+        set_green_color();
+        std::cout << "enabled\n";
+        out_file << "enabled\n";
+    } else {
+        set_red_color();
+        std::cout << "disabled\n";
+        out_file << "disabled\n";
+    }
+    set_default_color();
+
+    out_file.close();
+
+    _getwch();
     return 0;
 }
