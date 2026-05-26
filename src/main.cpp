@@ -7,6 +7,11 @@ void set_red_color() {
     SetConsoleTextAttribute(console_handle, FOREGROUND_RED | FOREGROUND_INTENSITY);
 }
 
+void set_green_color() {
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(console_handle, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+}
+
 void set_default_color() {
     HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(console_handle, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
@@ -86,25 +91,43 @@ int main() {
         if (choice == "1") {
             int tpm_status = is_tpm_enabled();
             if (tpm_status) {
-                std::cout << "tpm : enabled\n";
+                std::cout << "tpm : ";
+                set_green_color();
+                std::cout << "enabled\n";
+                set_default_color();
             } else {
-                std::cout << "tpm : disabled\n";
+                std::cout << "tpm : ";
+                set_red_color();
+                std::cout << "disabled\n";
+                set_default_color();
             }
             system("pause");
         } else if (choice == "2") {
             int secure_boot_status = is_secure_boot_enabled();
             if (secure_boot_status) {
-                std::cout << "secure_boot : enabled\n";
+                std::cout << "secure_boot : ";
+                set_green_color();
+                std::cout << "enabled\n";
+                set_default_color();
             } else {
-                std::cout << "secure_boot : disabled\n";
+                std::cout << "secure_boot : ";
+                set_red_color();
+                std::cout << "disabled\n";
+                set_default_color();
             }
             system("pause");
         } else if (choice == "3") {
             int hvci_status = is_hvci_enabled();
             if (hvci_status) {
-                std::cout << "hvci : enabled\n";
+                std::cout << "hvci : ";
+                set_green_color();
+                std::cout << "enabled\n";
+                set_default_color();
             } else {
-                std::cout << "hvci : disabled\n";
+                std::cout << "hvci : ";
+                set_red_color();
+                std::cout << "disabled\n";
+                set_default_color();
             }
             system("pause");
         } else if (choice == "4") {
