@@ -75,6 +75,7 @@ void display_menu() {
 }
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
     std::string choice;
     while (true) {
         system("cls");
